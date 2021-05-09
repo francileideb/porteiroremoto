@@ -1,3 +1,6 @@
 server/main.o
 server/httpd.o
 server/server
+duckdns
+www-data
+.vscode
