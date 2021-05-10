@@ -11,15 +11,14 @@ loginButton.addEventListener("click", (e) => {
     xhr.open('GET', 'http://192.168.0.178:12913/login?uname='+username+'&pass='+password);
     xhr.onload = () =>{
         // const data = JSON.parse(xhr.response);
-        console.log(data);
+        console.log(xhr.response);
+        if (xhr.response != "-1") {
+        alert("You have successfully logged in.");
+        location.reload();
+    } else {
+        loginErrorMsg.style.opacity = 1;
+    }
     };
     xhr.send();
-
-    // if (username === "user" && password === "web_dev") {
-    //     alert("You have successfully logged in.");
-    //     location.reload();
-    // } else {
-    //     loginErrorMsg.style.opacity = 1;
-    // }
 })
 

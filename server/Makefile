@@ -5,10 +5,10 @@ clean:
 	@rm -rf server
 
 server: main.o httpd.o
-	gcc -o server $^
+	gcc -o server $^ $$(mariadb_config --libs)
 
 main.o: main.c httpd.h
-	gcc -c -o main.o main.c
+	gcc -c -o main.o  $$(mariadb_config --cflags) main.c
 
 httpd.o: httpd.c httpd.h
 	gcc -c -o httpd.o httpd.c
