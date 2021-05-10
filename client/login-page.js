@@ -13,8 +13,8 @@ loginButton.addEventListener("click", (e) => {
         // const data = JSON.parse(xhr.response);
         console.log(xhr.response);
         if (xhr.response != "-1") {
-        alert("You have successfully logged in.");
-        location.reload();
+        // alert("You have successfully logged in.");
+        location.replace("http://192.168.0.178/porteiro.html");
     } else {
         loginErrorMsg.style.opacity = 1;
     }
