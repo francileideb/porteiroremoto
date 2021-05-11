@@ -10,6 +10,14 @@
 </head>
 
 <body>
+  <script>
+    window.onload = checkUser;
+    function checkUser(){
+      if(localStorage.getItem("id")) {
+        window.location ="porteiro.html";
+      }
+    };
+  </script>
   <main id="main-holder">
     <h1 id="login-header">Login</h1>
     

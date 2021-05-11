@@ -10,6 +10,14 @@
 </head>
 
 <body>
+  <script>
+    window.onload = checkUser;
+    function checkUser(){
+      if(!localStorage.getItem("id")) {
+        window.location ="index.html";
+      }
+    };
+  </script>
   <main id="main-holder">
     <form id="abrir">
       <input type="submit" value="Abrir" id="abrir-submit">

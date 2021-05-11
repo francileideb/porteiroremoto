@@ -8,13 +8,14 @@ loginButton.addEventListener("click", (e) => {
     const password = loginForm.password.value;
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://192.168.0.178:12913/login?uname='+username+'&pass='+password);
+    xhr.open('GET', 'http://172.29.58.40:12913/login?uname='+username+'&pass='+password);
     xhr.onload = () =>{
         // const data = JSON.parse(xhr.response);
         console.log(xhr.response);
         if (xhr.response != "-1") {
         // alert("You have successfully logged in.");
-        location.replace("http://192.168.0.178/porteiro.html");
+        localStorage.setItem("id", xhr.response);
+        location.replace("porteiro.html");
     } else {
         loginErrorMsg.style.opacity = 1;
     }

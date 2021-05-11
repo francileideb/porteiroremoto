@@ -51,7 +51,7 @@ void route()
     ROUTE_GET("/login")
     {
         printf("HTTP/1.1 200 OK\r\n");
-        printf("Access-Control-Allow-Origin: http://192.168.0.178\r\n\r\n");
+        printf("Access-Control-Allow-Origin: http://172.29.58.40\r\n\r\n");
         char uname[255]={'\0'};
         char pass[255]={'\0'};
         char *init = strchr(qs,'=');
@@ -67,8 +67,8 @@ void route()
     ROUTE_GET("/abrir")
     {
         printf("HTTP/1.1 200 OK\r\n");
-        printf("Access-Control-Allow-Origin: http://192.168.0.178\r\n\r\n");
-        char id[255];
+        printf("Access-Control-Allow-Origin: http://172.29.58.40\r\n\r\n");
+        char id[255]={'\0'};
         char *init = strchr(qs,'=');
         char *end = &qs[strlen(qs)-1];
         strncpy(id,init+1,end-init);
@@ -152,6 +152,12 @@ int getUser(char uname[255], char pass[255])
 
 int abrir (char id[255])
 {
+        char command[255];
+        time_t t = time(NULL);
+        struct tm tm = *localtime(&t);
+        char dateTime[255];
+        sprintf(dateTime,"%d-%02d-%02d_%02d-%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min);
+        sprintf(command,"fswebcam /home/pi/Documents/porteiroremoto/www-data/%s_%s.jpg",id,dateTime);
 	signal(SIGINT, finalization);
 	// === Verifica se o pino ja foi exportado === //
 	if(access_gpio(pin))
@@ -162,7 +168,8 @@ int abrir (char id[255])
 		// === Configurando Direcao do Pino === //
 			if(direction_gpio(pin, OUTPUT))
 			{
-				system("fswebcam /home/pi/Documents/porteiroremoto/www-data/image2.jpg");
+
+				system(command);
 					sleep(1);
 			}
 			else
@@ -197,7 +204,7 @@ int abrir (char id[255])
 
 		if(direction_gpio(pin, OUTPUT))
 		{
-			system("fswebcam /home/pi/Documents/porteiroremoto/www-data/image2.jpg");
+			system(command);
 			printf("GPIO%d configurada como OUTPUT! \n", pin);
 			delay(0.5);
 			printf("Iniciando o processo de acionamento\n");

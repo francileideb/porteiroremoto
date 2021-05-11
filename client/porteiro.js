@@ -8,7 +8,7 @@ abrirButton.addEventListener("click", (e) => {
     e.preventDefault();
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://192.168.0.178:12913/abrir?id=');
+    xhr.open('GET', 'http://172.29.58.40:12913/abrir?id='+localStorage.getItem("id"));
     xhr.onload = () =>{
         // const data = JSON.parse(xhr.response);
         console.log(xhr.response);
@@ -25,5 +25,5 @@ abrirButton.addEventListener("click", (e) => {
 sairButton.addEventListener("click", (e) => {
     e.preventDefault();
 
-    location.replace("http://192.168.0.178");
+    location.replace("index.html");
 })
