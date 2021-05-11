@@ -156,7 +156,7 @@ int abrir (char id[255])
         time_t t = time(NULL);
         struct tm tm = *localtime(&t);
         char dateTime[255];
-        sprintf(dateTime,"%d-%02d-%02d_%02d-%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min);
+        sprintf(dateTime,"%d-%02d-%02d_%02d-%02d-%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
         sprintf(command,"fswebcam /home/pi/Documents/porteiroremoto/www-data/%s_%s.jpg",id,dateTime);
 	signal(SIGINT, finalization);
 	// === Verifica se o pino ja foi exportado === //
