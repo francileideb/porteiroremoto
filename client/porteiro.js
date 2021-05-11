@@ -24,6 +24,6 @@ abrirButton.addEventListener("click", (e) => {
 
 sairButton.addEventListener("click", (e) => {
     e.preventDefault();
-
+    localStorage.removeItem("id");
     location.replace("index.html");
 })
