@@ -28,6 +28,7 @@ bool unexport_gpio(int pin);
 void delay(float time);
 void finalization(int nsingnal);
 int getUser(char uname[255], char pass[255]);
+int addRecord(char id[255], char date[255]);
 int abrir (char id[255]);
 
 
@@ -150,6 +151,66 @@ int getUser(char uname[255], char pass[255])
  return 1;
 }
 
+int addRecord(char id[255], char dateTime[255])
+{
+  MYSQL *conn;
+  MYSQL_RES *res;
+  MYSQL_ROW row;
+
+ char *server = "localhost";
+ char *user = "root";
+ char *password = "slfpr07c"; /*password is not set in this example for security*/
+ char *database = "porteiroremoto";
+
+ conn = mysql_init(NULL);
+
+ /* Connect to database */
+ if (!mysql_real_connect(conn, server,
+ user, password, database, 0, NULL, 0))
+ {
+   printf("Failed to connect MySQL Server %s. Error: %s\n", server, mysql_error(conn));
+   return 0;
+ }
+
+ 
+ /* send SQL query */
+ char querryString[255];
+ sprintf(querryString,"insert into records (userid, date) values(%s,\'%s\')",id,dateTime);
+ if (mysql_query(conn, querryString))
+ {
+   printf("Failed to execute quesry. Error: %s\n", mysql_error(conn));
+   return 0;
+ }
+
+ res = mysql_store_result(conn);
+ if (res == NULL)
+ {
+   return 0;
+ }
+
+ int columns = mysql_num_fields(res);
+
+ int i = 0;
+
+//  printf("Entries in the table my_table:\n");
+ if(row = mysql_fetch_row(res))
+ {
+   for (i = 0; i < columns; i++)
+   {
+     printf("%s ", row[i] ? row[i] : "NULL");
+   }
+   printf("\n");
+ }
+ else{
+     printf("-1");
+ }
+
+ mysql_free_result(res);
+ mysql_close(conn);
+
+ return 1;
+}
+
 int abrir (char id[255])
 {
         char command[255];
@@ -170,6 +231,7 @@ int abrir (char id[255])
 			{
 
 				system(command);
+                                addRecord(id,dateTime);
 					sleep(1);
 			}
 			else
@@ -204,6 +266,7 @@ int abrir (char id[255])
 
 		if(direction_gpio(pin, OUTPUT))
 		{
+                        addRecord(id,dateTime);
 			system(command);
 			printf("GPIO%d configurada como OUTPUT! \n", pin);
 			delay(0.5);
